@@ -19,11 +19,18 @@ search: true
 
 # Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
 
-We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+Admitad API is a functional interface which gives access to the whole functionality of the admitad.com. It is compatible with all programming languages which supports JSON.
 
-This example API documentation page was created with [Slate](https://github.com/lord/slate). Feel free to edit it and use it as a base for your own API's documentation.
+
+
+This interface helps you to create applications for Admitad affiliate network. You can build up applications to analyze your own statistics and accounting records or to put them up for sale in the Admitad App Store.
+
+
+
+First of all we recommend to create an account on admitad.com and get acquainted with the main service items, then decide what kind of application you want to create.
+
+After the final idea formation it`s useful to turn a hand to the architecture development and study the opportunities of our API, with the help of which you create your application.
 
 # Authentication
 

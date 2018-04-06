@@ -250,6 +250,96 @@
                   </li>
               </ul>
           </li>
+          <li>
+            <a href="#api-parameters" class="toc-h1 toc-link" data-title="api-parameters">API Parameters</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#limit-offset-parameters" class="toc-h2 toc-link" data-title="limit-offset-parameters">limit, offset parameters</a>
+                  </li>
+                  <li>
+                    <a href="#lanuage-parameter" class="toc-h2 toc-link" data-title="lanuage-parameter">“Lanuage” parameter</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#api-methods" class="toc-h1 toc-link" data-title="api-methods">API Methods</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#user-information" class="toc-h2 toc-link" data-title="user-information">User information</a>
+                  </li>
+                  <li>
+                    <a href="#publisher-tickets" class="toc-h2 toc-link" data-title="publisher-tickets">Publisher tickets</a>
+                  </li>
+                  <li>
+                    <a href="#news" class="toc-h2 toc-link" data-title="news">News</a>
+                  </li>
+                  <li>
+                    <a href="#referrals" class="toc-h2 toc-link" data-title="referrals">Referrals</a>
+                  </li>
+                  <li>
+                    <a href="#checking-links" class="toc-h2 toc-link" data-title="checking-links">Checking links</a>
+                  </li>
+                  <li>
+                    <a href="#deeplink-generator" class="toc-h2 toc-link" data-title="deeplink-generator">Deeplink generator</a>
+                  </li>
+                  <li>
+                    <a href="#coupons" class="toc-h2 toc-link" data-title="coupons">Coupons</a>
+                  </li>
+                  <li>
+                    <a href="#banners" class="toc-h2 toc-link" data-title="banners">Banners</a>
+                  </li>
+                  <li>
+                    <a href="#landing-pages" class="toc-h2 toc-link" data-title="landing-pages">Landing pages</a>
+                  </li>
+                  <li>
+                    <a href="#auxiliary-information" class="toc-h2 toc-link" data-title="auxiliary-information">Auxiliary information</a>
+                  </li>
+                  <li>
+                    <a href="#publisher-ad-spaces" class="toc-h2 toc-link" data-title="publisher-ad-spaces">Publisher ad spaces</a>
+                  </li>
+                  <li>
+                    <a href="#notifications" class="toc-h2 toc-link" data-title="notifications">Notifications</a>
+                  </li>
+                  <li>
+                    <a href="#payment-requests" class="toc-h2 toc-link" data-title="payment-requests">Payment requests</a>
+                  </li>
+                  <li>
+                    <a href="#affiliate-programs" class="toc-h2 toc-link" data-title="affiliate-programs">Affiliate programs</a>
+                  </li>
+                  <li>
+                    <a href="#publisher-reports" class="toc-h2 toc-link" data-title="publisher-reports">Publisher reports</a>
+                  </li>
+                  <li>
+                    <a href="#postback-urls" class="toc-h2 toc-link" data-title="postback-urls">Postback URLs</a>
+                  </li>
+                  <li>
+                    <a href="#retag" class="toc-h2 toc-link" data-title="retag">Retag</a>
+                  </li>
+                  <li>
+                    <a href="#broken-links" class="toc-h2 toc-link" data-title="broken-links">Broken links</a>
+                  </li>
+                  <li>
+                    <a href="#lost-orders" class="toc-h2 toc-link" data-title="lost-orders">Lost orders</a>
+                  </li>
+                  <li>
+                    <a href="#api-applications" class="toc-h2 toc-link" data-title="api-applications">API applications</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#client-libraries" class="toc-h1 toc-link" data-title="client-libraries">Client Libraries</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#python-libraries" class="toc-h2 toc-link" data-title="python-libraries">Python libraries</a>
+                  </li>
+                  <li>
+                    <a href="#php-libraries" class="toc-h2 toc-link" data-title="php-libraries">PHP libraries</a>
+                  </li>
+                  <li>
+                    <a href="#javascript-libraries" class="toc-h2 toc-link" data-title="javascript-libraries">Javascript libraries</a>
+                  </li>
+              </ul>
+          </li>
       </div>
         <ul class="toc-footer">
             <li><a href='https://www.admitad.com/en/sign_in/'>Sign In for a Developer Key</a></li>
@@ -1053,6 +1143,114 @@ Set-Cookie: section=webmaster; expires=Tue, 17-Sep-2013 13:07:39 GMT; Path=/</p>
     <td>The maximum number of tokens has been exceeded</td> 
   </tr>
 </table>
+<h1 id='api-parameters'>API Parameters</h1>
+<p>This section contains the description of API requests parameters.</p>
+
+<ul>
+  <li>limit, offset parameters. Description of the parameters that limit the number of returned records.</li>
+  <li>“Lanuage” parameter. Описание параметра языка.</li>
+</ul>
+<h2 id='limit-offset-parameters'>limit, offset parameters</h2>
+<table>
+  <tr>
+    <th>Parameter</th>
+    <th>Default value</th> 
+    <th>Maximum value</th>
+  </tr>
+  <tr>
+    <td>limit</td>
+    <td>20</td> 
+    <td>500</td>
+  </tr>
+  <tr>
+    <td>offset</td>
+    <td>0</td> 
+    <td></td>
+  </tr>
+</table>
+<h2 id='lanuage-parameter'>“Lanuage” parameter</h2>
+<table>
+  <tr>
+    <th>Parameter</th>
+    <th>Default value</th> 
+    <th>Possible values</th>
+  </tr>
+  <tr>
+    <td>language</td>
+    <td>ru</td> 
+    <td>es, en, ru, tr, pl</td>
+  </tr>
+</table>
+<h1 id='api-methods'>API Methods</h1>
+<p>In this section, you will find the complete list of methods available in API. The possibilities provided by the API almost completely duplicate the functionality of a publisher on the website. Thus, you obtain a wide range of possibilities for automation of your or publishers’ work process.
+<ul>
+<li>User information. Using this method, you can obtain the publisher’s private information.</li></p>
+
+<p><li>Publisher tickets. This section contains the methods for working with tech support.</li></p>
+
+<p><li>News. Using this method, you can obtain the latest news.</li></p>
+
+<p><li>Auxiliary information. This section contains the methods that allow obtaining our system’s general data that is not user-specific: the list of languages, categories, currencies, etc.</li></p>
+
+<p><li>Referrals. Using this method, you will obtain all available information about publisher’s referrals.</li></p>
+
+<p><li>Checking links. This section shows the method for checking the Admitad affiliate links.</li></p>
+
+<p><li>Deeplink generator. This section contains the method for generating deeplinks.</li></p>
+
+<p><li>Coupons. This section contains methods of working with coupons.</li></p>
+
+<p><li>Banners. The set of methods for working with banners.</li></p>
+
+<p><li>Landing pages. The set of methods for working with landing pages.</li></p>
+
+<p><li>Publisher ad spaces. This section contains the complete set of methods for ad spaces management.</li></p>
+
+<p><li>Notifications. Using this method, you may receive or delete notifications sent to the publisher.</li></p>
+
+<p><li>Payment requests. This set of methods is required for working with payments to the publisher.</li></p>
+
+<p><li>Affiliate programs. Using the methods from this section, you will be able to interact with the affiliate programs on behalf of the publisher.</li></p>
+
+<p><li>Publisher reports. The complete set of methods for retrieving all kinds of statistics at publisher’s disposal.</li></p>
+
+<p><li>Postback URLs. Methods of postback URLs management.</li></p>
+
+<p><li>Retag. Methods of Retag codes management.</li></p>
+
+<p><li>Broken links. The set of methods for working with broken links.</li></p>
+
+<p><li>Lost orders. Methods of lost order management.</li></p>
+
+<p><li>API applications. Набор методов для работы с брокерскими заявками.</li>
+</ul></p>
+<h2 id='user-information'>User information</h2><h3 id='information-about-the-publisher'>Information about the publisher</h3><h2 id='publisher-tickets'>Publisher tickets</h2><h2 id='news'>News</h2><h2 id='referrals'>Referrals</h2><h2 id='checking-links'>Checking links</h2><h2 id='deeplink-generator'>Deeplink generator</h2><h2 id='coupons'>Coupons</h2><h2 id='banners'>Banners</h2><h2 id='landing-pages'>Landing pages</h2><h2 id='auxiliary-information'>Auxiliary information</h2><h2 id='publisher-ad-spaces'>Publisher ad spaces</h2><h2 id='notifications'>Notifications</h2><h2 id='payment-requests'>Payment requests</h2><h2 id='affiliate-programs'>Affiliate programs</h2><h2 id='publisher-reports'>Publisher reports</h2><h2 id='postback-urls'>Postback URLs</h2><h2 id='retag'>Retag</h2><h2 id='broken-links'>Broken links</h2><h2 id='lost-orders'>Lost orders</h2><h2 id='api-applications'>API applications</h2><h1 id='client-libraries'>Client Libraries</h1>
+<p>Here you can find the links to the libraries that may be useful when working with the API.</p>
+
+<ul>
+  <li>Python libraries</li>
+  <li>PHP libraries</li>
+  <li>Javascript libraries</li>
+</ul>
+<h2 id='python-libraries'>Python libraries</h2>
+<p>The library allows sending requests to Admitad API, retrieving and updating the access keys. The documentation is available for downloading here:
+<ul>
+  <li>admitad-python-api (https://github.com/admitad/admitad-python-api)</li>
+</ul></p>
+<h2 id='php-libraries'>PHP libraries</h2>
+<p>The library allows sending requests to Admitad API, retrieving and updating the access keys. The documentation is available for downloading here:</p>
+
+<ul>
+  <li>admitad-php-api (https://github.com/admitad/admitad-php-api)</li>
+</ul>
+<h2 id='javascript-libraries'>Javascript libraries</h2>
+<p>This script is embedded in the application page that is run in iframe, and makes it possible to, e.g., adjust the size of the main window to the size of the application; it also contains several other features that facilitate the work for the application developer.</p>
+
+<p>The library and detailed information are available for downloading here:</p>
+
+<ul>
+  <li>admitad-js (https://github.com/admitad/admitad-js)</li>
+</ul>
 
       </div>
       <div class="dark-box">

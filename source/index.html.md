@@ -835,3 +835,171 @@ Transferred data include the name of the error error. They can also include addi
     <td>The maximum number of tokens has been exceeded</td> 
   </tr>
 </table>
+
+# API Parameters
+
+This section contains the description of API requests parameters.
+
+<ul>
+  <li>limit, offset parameters. Description of the parameters that limit the number of returned records.</li>
+  <li>“Lanuage” parameter. Описание параметра языка.</li>
+</ul>
+
+## limit, offset parameters
+
+<table>
+  <tr>
+    <th>Parameter</th>
+    <th>Default value</th> 
+    <th>Maximum value</th>
+  </tr>
+  <tr>
+    <td>limit</td>
+    <td>20</td> 
+    <td>500</td>
+  </tr>
+  <tr>
+    <td>offset</td>
+    <td>0</td> 
+    <td></td>
+  </tr>
+</table>
+
+## “Lanuage” parameter
+
+<table>
+  <tr>
+    <th>Parameter</th>
+    <th>Default value</th> 
+    <th>Possible values</th>
+  </tr>
+  <tr>
+    <td>language</td>
+    <td>ru</td> 
+    <td>es, en, ru, tr, pl</td>
+  </tr>
+</table>
+
+# API Methods
+
+In this section, you will find the complete list of methods available in API. The possibilities provided by the API almost completely duplicate the functionality of a publisher on the website. Thus, you obtain a wide range of possibilities for automation of your or publishers’ work process.
+<ul>
+<li>User information. Using this method, you can obtain the publisher’s private information.</li>
+
+<li>Publisher tickets. This section contains the methods for working with tech support.</li>
+
+<li>News. Using this method, you can obtain the latest news.</li>
+
+<li>Auxiliary information. This section contains the methods that allow obtaining our system’s general data that is not user-specific: the list of languages, categories, currencies, etc.</li>
+
+<li>Referrals. Using this method, you will obtain all available information about publisher’s referrals.</li>
+
+<li>Checking links. This section shows the method for checking the Admitad affiliate links.</li>
+
+<li>Deeplink generator. This section contains the method for generating deeplinks.</li>
+
+<li>Coupons. This section contains methods of working with coupons.</li>
+
+<li>Banners. The set of methods for working with banners.</li>
+
+<li>Landing pages. The set of methods for working with landing pages.</li>
+
+<li>Publisher ad spaces. This section contains the complete set of methods for ad spaces management.</li>
+
+<li>Notifications. Using this method, you may receive or delete notifications sent to the publisher.</li>
+
+<li>Payment requests. This set of methods is required for working with payments to the publisher.</li>
+
+<li>Affiliate programs. Using the methods from this section, you will be able to interact with the affiliate programs on behalf of the publisher.</li>
+
+<li>Publisher reports. The complete set of methods for retrieving all kinds of statistics at publisher’s disposal.</li>
+
+<li>Postback URLs. Methods of postback URLs management.</li>
+
+<li>Retag. Methods of Retag codes management.</li>
+
+<li>Broken links. The set of methods for working with broken links.</li>
+
+<li>Lost orders. Methods of lost order management.</li>
+
+<li>API applications. Набор методов для работы с брокерскими заявками.</li>
+</ul>
+
+## User information
+
+### Information about the publisher
+
+## Publisher tickets
+
+## News
+
+## Referrals
+
+## Checking links
+
+## Deeplink generator
+
+## Coupons
+
+## Banners
+
+## Landing pages
+
+## Auxiliary information
+
+## Publisher ad spaces
+
+## Notifications
+
+## Payment requests
+
+## Affiliate programs
+
+## Publisher reports
+
+## Postback URLs
+
+## Retag
+
+## Broken links
+
+## Lost orders
+
+## API applications
+
+# Client Libraries
+
+Here you can find the links to the libraries that may be useful when working with the API.
+
+<ul>
+  <li>Python libraries</li>
+  <li>PHP libraries</li>
+  <li>Javascript libraries</li>
+</ul>
+
+## Python libraries
+
+The library allows sending requests to Admitad API, retrieving and updating the access keys. The documentation is available for downloading here:
+<ul>
+  <li>admitad-python-api (https://github.com/admitad/admitad-python-api)</li>
+</ul>
+
+## PHP libraries
+
+The library allows sending requests to Admitad API, retrieving and updating the access keys. The documentation is available for downloading here:
+
+<ul>
+  <li>admitad-php-api (https://github.com/admitad/admitad-php-api)</li>
+</ul>
+
+## Javascript libraries
+
+This script is embedded in the application page that is run in iframe, and makes it possible to, e.g., adjust the size of the main window to the size of the application; it also contains several other features that facilitate the work for the application developer.
+
+The library and detailed information are available for downloading here:
+
+<ul>
+  <li>admitad-js (https://github.com/admitad/admitad-js)</li>
+</ul>
+
+

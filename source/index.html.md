@@ -11,8 +11,8 @@ toc_footers:
   - <a href='https://www.admitad.com/en/sign_in/'>Sign In for a Developer Key</a>
   - <a href='https://github.com/lord/slate'>Documentation Powered by Slate</a>
 
-includes:
-  - errors
+#includes:
+#  - errors
 
 search: true
 ---
@@ -92,7 +92,7 @@ Upon authorization you will be provided with an access_token with the help of wh
   <li>*   The ID of the application is available for the logged in publisher at the homepage for developers (when the “Get keys” button is clicked).</li>
   <li>**  The domain of the specified URL shall comply with the primary domain in the settings of the application)</li>
   <li>*** The server returns this value when it redirects the user agent back to the client</li>
-<ul>
+</ul>
 
 Example of request:
 
@@ -170,6 +170,7 @@ To get access_token it is required to send POST request to URL https://api.admit
 
 `curl -H 'Authorization: Basic b64XXX' -X POST https://api.admitad.com/token/ -d 'code=c75ebf64ad48a352630b6d953ce365&client_secret=a0f8a8b24de8b8182a0ddd2e89f5b1&grant_type=authorization_code&client_id=cb281d918a37e346b45e9aea1c6eb7&redirect_uri=https%3A%2F%2Fgoogle.com%2F'`
 
+
 **Example of request:**
 
 `POST /token/ HTTP/1.1`
@@ -181,7 +182,7 @@ To get access_token it is required to send POST request to URL https://api.admit
 As a result of this request you will get a new access_token. The time to live of the token in seconds expires_in, refresh_token and additional information for users are returned as well:
 
 `{  
-"username": "webmaster1",&nbsp;
+"username": "webmaster1,
 "first_name": "name",  
 "last_name"': "surname",  
 "language": "ru",  
@@ -196,177 +197,641 @@ As a result of this request you will get a new access_token. The time to live of
 
 **Client authorization**
 
+To authorize the user, it is required to send POST request to URL https://api.admitad.com/token/, using data format application/x-www-form/urlencoded and transfer the following parameters:
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Required</th> 
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>client_id</td>
+    <td>✔</td> 
+    <td>ID of your application*</td>
+  </tr>
+  <tr>
+    <td>scope</td>
+    <td>✔</td> 
+    <td>A list of application access settings separated by a space that shall be requested.</td>
+  </tr>
+  <tr>
+    <td>grant_type</td>
+    <td>✔</td> 
+    <td>Type of request: client_credentials</td>
+  </tr>
+</table>
+
+It is required to use HTTP Basic authentification for the request using client_id* and client_secret* as access parameters. The authorization header is base64 encoded line that contains client_id and client_secret united by a colon.
+
+<ul>
+  <li>* The identifier (client_id) and the secret key (client_secret) of the application are available for the logged in publisher at the homepage for developers (when the “Get keys” button is clicked).</li>
+</ul>
+
+**Below is an example of forming a base64-encoded authorization header in Python 2.7 for client_id=’cb281d918a37e346b45e9aea1c6eb7’ and client_secret=’a0f8a8b24de8b8182a0ddd2e89f5b1’:**
+
+`from base64 import b64encode`
+`client_id='cb281d918a37e346b45e9aea1c6eb7'`
+`client_secret='a0f8a8b24de8b8182a0ddd2e89f5b1'`
+`data = client_id + ':' + client_secret`
+`# data = 'cb281d918a37e346b45e9aea1c6eb7:a0f8a8b24de8b8182a0ddd2e89f5b1'`
+`data_b64_encoded = b64encode(data)`
+
+**Below is an example of a base64-encoded authorization header (the data_b64_encoded variable):**
+
+`Y2IyODFkOTE4YTM3ZTM0NmI0NWU5YWVhMWM2ZWI3OmEwZjhhOGIyNGRlOGI4MTgyYTBkZGQyZTg5ZjViMQ==`
+
+**Below is an example of a request using a curl utility for client_id=cb281d918a37e346b45e9aea1c6eb7, where b64XXX is the base64-encoded authorization header:**
+
+`curl -H 'Authorization: Basic b64XXX' -X POST https://api.admitad.com/token/ -d 'grant_type=client_credentials&client_id=cb281d918a37e346b45e9aea1c6eb7&scope=advcampaigns banners websites'`
+
+**Example of request:**
+
+`POST /token/ HTTP/1.1`
+`Host: api.admitad.com`
+`Authorization: Basic b64XXX`
+`Content-Type: application/x-www-form-urlencoded;charset=UTF-8`
+
+`grant_type=client_credentials&client_id=cb281d918a37e346b45e9aea1c6eb7&scope=advcampaigns banners websites`
+
+As a result of this request you will get a new access_token. The time to live of the token in seconds expires_in, refresh_token and additional information for users are returned as well:
+
+`{`
+    `"username": "webmaster1",`
+    `"first_name": "name",`
+    `"last_name"': "surname",`
+    `"language": "ru",`
+    `"access_token": "4b8b33955a",`
+    `"token_type": "bearer",`
+    `"expires_in": 604800,`
+    `"refresh_token": "ea957cce42",`
+    `"scope": "advcampaigns banners websites"`
+`}`
+
+## Access_token refresh
+
+**Access_token refresh**
+
+In case access_token expires, you can update it using refresh_token. Make POST request to URL https://api.admitad.com/token/ using data format application/x-www-form-urlencoded and transfer the following parameters:
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Required</th> 
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>client_id</td>
+    <td>✔</td> 
+    <td>ID of your application.*</td>
+  </tr>
+  <tr>
+    <td>client_secret</td>
+    <td>✔</td> 
+    <td>Secret key of your application</td>
+  </tr>
+  <tr>
+    <td>grant_type</td>
+    <td>✔</td> 
+    <td>Type of request: client_credentials</td>
+  </tr>
+  <tr>
+    <td>refresh_token</td>
+    <td>✔</td> 
+    <td>The value obtained after authorization.</td>
+  </tr>
+</table>
+
+<ul>
+  <li>* ID and the secret key of the application are available for the logged in publisher at the homepage for developers (when the “Get keys” button is clicked).</li>
+</ul>
+
+**Below is an example of a request using a curl utility for client_id=cb281d918a37e346b45e9aea1c6eb7, client_secret=a0f8a8b24de8b8182a0ddd2e89f5b1 and refresh_token=7521b7640c:**
+
+`curl -X POST https://api.admitad.com/token/ -d 'grant_type=refresh_token&client_id=cb281d918a37e346b45e9aea1c6eb7&refresh_token=7521b7640c&client_secret=a0f8a8b24de8b8182a0ddd2e89f5b1'`
+
+**Example of request:**
+
+`POST /token/ HTTP/1.1`
+`Host: api.admitad.com`
+`Content-Type: application/x-www-form-urlencoded;charset=UTF-8`
+
+`grant_type=refresh_token&client_id=cb281d918a37e346b45e9aea1c6eb7&refresh_token=7521b7640c&client_secret=a0f8a8b24de8b8182a0ddd2e89f5b1`
+
+As a result of this request you will get a new access_token. The time to live of the token in seconds expires_in, refresh_token and additional information for users are returned as well:
+
+`{`
+    `"username": "webmaster1",`
+    `"first_name": "name",`
+    `"last_name"': "surname",`
+    `"language": "ru",`
+    `"access_token": "4b8b33955a",`
+    `"token_type": "bearer",`
+    `"expires_in": 604800,`
+    `"refresh_token": "ea957cce42",`
+    `"scope": "advcampaigns banners websites"`
+`}`
+
+## Authorization of applications on Admitad.com
+
+**Authorization of applications on Admitad.com**
+
+You may create any integrated application uploaded from your server using an IFrame element built on Admitad page. Such applications can display information by means of any technologies supported by the user browser: HTML, Javasсript, AJAX, Flash, etc.
+
+**Due to the fact that Admitad.com uses a secure protocol (HTTPS), your website uploaded in our ‘container’ shall also use HTTPS protocol. Buy an SSL-certificate and install it on your server.**
+
+**Application launch parameters**
+
+When the application is displayed by means of a request line (GET or POST method), the following parameters are sent to the application:
+
+<ul>
+ <li>signed_request</li>
+ <li>retloc is the URL of the page in which iframe with the application are built.</li>
+</ul>
+
+**Example of ``retloc``:**
+`https%3A//admitad.com/appstore/app/getcoupon/`
+
+**Example of a request**
+
+`https://getcoupons.ru/?signed_request=d3ddf1100c5e47a466cafe1e0dc8cb40a4f7bc3219744be1e049dd6d7a76450c.eyJ1c2VybmFtZSI6ICJhZHZlcnRpc2VyMSIsICJmaXJzdF9uYW1lIjogIm5hbWUiLCAibGFzdF9uYW1lIjogInN1cm5hbWUiLCAiYWxnb3JpdGhtIjogIkhNQUMtU0hBMjU2IiwgImxhbmd1YWdlIjogInJ1IiwgImFjY2Vzc190b2tlbiI6ICIwODdkNmNjNDM3IiwgImV4cGlyZXNfaW4iOiA2MDgwMCwgImlkIjogMTMwOTAsICJyZWZyZXNoX3Rva2VuIjogIjc1MjFiNzY0MGMifQ==&retloc=https%3A//apps.admitad.com/ru/getcoupons/`
+
+## Description of signed_request line
+
+**Description of signed_request line**
 
 
-# Kittens
+The signed_request string is a joint signature with the use of the HMAC SHA256 method for a base64-encoded data string in JSON format, point (.), and the base64-encoded data string itself in JSON format.
+Data are signed by the secret key of your application known to Admitad only. The signature helps you to get sure that the request was sent by Admitad. It is impossible to falsify signed_request line without a secret key.
 
-## Get All Kittens
+<ul>
+<li>the secret key of the application is available for the logged in publisher at the homepage for developers (when the “Get keys” button is clicked).</li>
+</ul>
 
-```ruby
-require 'kittn'
+**Example of data transferred to the application:**
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
-
-```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
-```
-
-> The above command returns JSON structured like this:
-
-```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
-```
-
-This endpoint retrieves all kittens.
-
-### HTTP Request
-
-`GET http://example.com/api/kittens`
-
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
-
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-
-## Get a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2"
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
-```
-
-> The above command returns JSON structured like this:
-
-```json
 {
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
+    'username':         'webmaster1',
+    'id':               13090,
+    'first_name':       'name',
+    'last_name':        'surname',
+    'algorithm':        'HMAC-SHA256',
+    'language':         'ru',
+    'access_token':     '087d6cc437',
+    'refresh_token':    '7521b7640c',
+    'expires_in':       604800
 }
-```
 
-This endpoint retrieves a specific kitten.
+**Description of data fields:**
 
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+<table>
+  <tr>
+    <th>Name</th>
+  </tr>
+  <tr>
+    <td>id</td>
+  </tr>
+  <tr>
+    <td>first_name</td>
+  </tr>
+  <tr>
+    <td>last_name</td>
+  </tr>
+  <tr>
+    <td>algorithm</td>
+  </tr>
+  <tr>
+    <td>language</td>
+  </tr>
+  <tr>
+    <td>access_token</td>
+  </tr>
+  <tr>
+    <td>refresh_token</td>
+  </tr>
+  <tr>
+    <td>expires_in</td>
+  </tr>
+</table>
 
-### HTTP Request
+**Below is an example of Python 2.7 code for encoding data, where client_secret = a0f8a8b241d8b8182a0ddd2e89f5b1:**
 
-`GET http://example.com/kittens/<ID>`
+`import hmac`
+`import json`
+`from hashlib import sha256`
+`from base64 import b64encode`
+`data = {`
+    `'username': 'advertiser1',`
+    `'id': 13090,`
+    `'first_name': 'name',`
+    `'last_name': 'surname',`
+    `'algorithm': 'HMAC-SHA256',`
+    `'language': 'ru',`
+    `'access_token': '087d6cc437',`
+    `'refresh_token': '7521b7640c',`
+    `'expires_in': 604800`
+`}`
+`data = b64encode(json.dumps(data))`
+`signature = hmac.new(str(client_secret), msg=data, digestmod=sha256).hexdigest()`
+`signed_request = '%s.%s' % (signature, data)`
 
-### URL Parameters
+**Below is an example of Python 2.7 code for encoding data:**
 
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
+import hmac
+import json
+from hashlib import sha256
+from base64 import b64decode
 
-## Delete a Specific Kitten
+def decode_data(signed_request):
+    signature, encoded_data = signed_request.split('.', 1)
+    data = json.loads(b64decode(encoded_data))
+    if data.get('algorithm').upper() != 'HMAC-SHA256':
+        return
+    expected_signature = hmac.new(
+        str(client_secret), msg=encoded_data, digestmod=sha256).hexdigest()
+    if signature != expected_signature:
+        return
+    return data
 
-```ruby
-require 'kittn'
+**Below is an example of signed data (the signed_request variable):**
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.delete(2)
-```
+`d3ddf1100c5e47a466cafe1e0dc8cb40a4f7bc3219744be1e049dd6d7a76450c.eyJ1c2VybmFtZSI6ICJhZHZlcnRpc2VyMSIsICJmaXJzdF9uYW1lIjogIm5hbWUiLCAibGFzdF9uYW1lIjogInN1cm5hbWUiLCAiYWxnb3JpdGhtIjogIkhNQUMtU0hBMjU2IiwgImxhbmd1YWdlIjogInJ1IiwgImFjY2Vzc190b2tlbiI6ICIwODdkNmNjNDM3IiwgImV4cGlyZXNfaW4iOiA2MDgwMCwgImlkIjogMTMwOTAsICJyZWZyZXNoX3Rva2VuIjogIjc1MjFiNzY0MGMifQ==`
 
-```python
-import kittn
+## Help on access settings
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.delete(2)
-```
+To get the required rights during authorization, it is required to send scope parameter containing names of rights separated by a space.
 
-```shell
-curl "http://example.com/api/kittens/2"
-  -X DELETE
-  -H "Authorization: meowmeowmeow"
-```
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Access</th> 
+  </tr>
+  <tr>
+    <td>public_data</td> 
+    <td>
+      <ul>
+        <li>Types of ad spaces</li>
+        <li>Ad space languages</li>
+        <li>Advertising services</li>
+        <li>Ad space categories</li>
+        <li>Ad space regions</li>
+        <li>List of currencies</li>
+        <li>Coupon categories</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>websites</td> 
+    <td>
+      <ul>
+        <li>List of ad spaces</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>manage_websites</td> 
+    <td>
+      <ul>
+        <li>Create an ad space</li>
+        <li>Edit an ad space</li>
+        <li>Ad space confirmation</li>
+        <li>Delete an ad space</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>advcampaigns</td> 
+    <td>
+      <ul>
+        <li>List of affiliate programs</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>advcampaigns_for_website</td> 
+    <td>
+      <ul>
+        <li>List of programs for the ad space</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>manage_advcampaigns</td> 
+    <td>
+      <ul>
+        <li>Join affiliate programs</li>
+        <li>Unjoin affiliate programs</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>banners</td> 
+    <td>
+      <ul>
+        <li>Banners list</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>landings</td> 
+    <td>
+      <ul>
+        <li>List of landing pages</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>banners_for_website</td> 
+    <td>
+      <ul>
+        <li>List of banners for the ad space</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>payments</td> 
+    <td>
+      <ul>
+        <li>List of payment requests</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>manage_payments</td> 
+    <td>
+      <ul>
+        <li>Creation of payment requests</li>
+        <li>Delete payment requests</li>
+        <li>Confirm payment requests</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>announcements</td> 
+    <td>
+      <ul>
+        <li>List of notifications</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>referrals</td> 
+    <td>
+      <ul>
+        <li>List of referrals</li>
+      </ul>
+    </td>
+  </tr>
+   <tr>
+    <td>coupons</td> 
+    <td>
+      <ul>
+        <li>List of coupons</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>coupons_for_website</td> 
+    <td>
+      <ul>
+        <li>List of coupons for the ad space</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>private_data</td> 
+    <td>
+      <ul>
+        <li>Info about the publisher (name, language)</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>tickets</td> 
+    <td>
+      <ul>
+        <li>List of publisher tickets</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>manage_tickets</td> 
+    <td>
+      <ul>
+        <li>Create a ticket</li>
+        <li>Comment on the ticket</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>private_data_email</td> 
+    <td>
+      <ul>
+        <li>Info about the publisher (name, language, e-mail)</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>private_data_phone</td> 
+    <td>
+      <ul>
+        <li>Info about the publisher (name, language, phone number)</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>private_data_balance</td> 
+    <td>
+      <ul>
+        <li>Info about the publisher balance</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>validate_links</td> 
+    <td>
+      <ul>
+        <li>Check links</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>deeplink_generator</td> 
+    <td>
+      <ul>
+        <li>Deeplink generator</li>
+      </ul>
+    </td>
+  </tr>
+   <tr>
+    <td>statistics</td> 
+    <td>
+      <ul>
+        <li>Publisher reports</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>opt_codes</td> 
+    <td>
+      <ul>
+        <li>List of Postback URLs</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>manage_opt_codes</td> 
+    <td>
+      <ul>
+        <li>Create Postback URL by action</li>
+        <li>Editing Postback URL by action</li>
+        <li>Creating of Postback URLs by the program status change</li>
+        <li>Editing Postback URL by the program change status</li>
+        <li>Removing Postback URLs</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>webmaster_retag</td> 
+    <td>
+      <ul>
+        <li>List of ReTag tags</li>
+        <li>Available program levels</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>manage_webmaster_retag</td> 
+    <td>
+      <ul>
+        <li>Create ReTag tags</li>
+        <li>Edit ReTag tags</li>
+        <li>Delete ReTag tags</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>broken_links</td> 
+    <td>
+      <ul>
+        <li>List of broken links</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>manage_broken_links</td> 
+    <td>
+      <ul>
+        <li>Fixing broken links</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>lost_orders</td> 
+    <td>
+      <ul>
+        <li>List of lost orders</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>manage_lost_orders</td> 
+    <td>
+      <ul>
+        <li>Creation of lost order</li>
+        <li>Canceling a lost order</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>broker_application</td> 
+    <td>
+      <ul>
+        <li>List of broker applications</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>manage_broker_application</td> 
+    <td>
+      <ul>
+        <li>Creating broker applications</li>
+      </ul>
+    </td>
+  </tr>
+</table>
 
-```javascript
-const kittn = require('kittn');
+**Example:**
 
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.delete(2);
-```
+`scope=public_date20%websites%20coupons`
 
-> The above command returns JSON structured like this:
+## Help on API response codes
 
-```json
-{
-  "id": 2,
-  "deleted" : ":("
-}
-```
+**Help on API response codes**
 
-This endpoint deletes a specific kitten.
+<ul>
+  <li>in case of a positive result, the response will be 200, 201 or 202.</li>
+  <li>if the URL is incorrect, the response will be 404.</li>
+  <li>if not enough rights for the transaction, the response will be 403 or 401.</li>
+  <li>in case of any errors, the response will be 400 or 500.</li>
+  <li>in case the maximum number of requests for the period is exceeded, the response will be 503. The current limit - up to 60 requests per minute for the application.</li>
+</ul>
 
-### HTTP Request
+The response of API server is in JSON format. In case of an error, the response of the server will look like this:
 
-`DELETE http://example.com/kittens/<ID>`
+HTTP/1.1 401 UNAUTHORIZED
+Server: nginx/1.2.3
+Date: Mon, 17 Sep 2012 10:07:39 GMT
+Content-Type: application/json; charset=utf-8
+Transfer-Encoding: chunked
+Connection: keep-alive
+Vary: Authorization, Cookie
+WWW-Authenticate: Bearer realm="", error="invalid_token", error_description="Token doesn't exist"
+Content-Language: ru
+Set-Cookie: section=webmaster; expires=Tue, 17-Sep-2013 13:07:39 GMT; Path=/
 
-### URL Parameters
+{"error_description": "Token doesn't exist", "error_code": 1, "error": "invalid_token"}
 
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to delete
+Transferred data include the name of the error error. They can also include additional information:
 
+<ul>
+  <li>**error_description** - error description</li>
+  <li>**error_code** - additional error code</li>
+</ul>
+
+**Additional error codes:**
+
+<table>
+  <tr>
+    <th>Value</th>
+    <th>Description</th> 
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>The token expired</td> 
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>Incorrect or invalid token</td> 
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>The key has no sufficient access rights for performing the operation</td> 
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>Incorrect request</td> 
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>The maximum number of requests for the period expired</td> 
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>The refresh token is unavailable</td> 
+  </tr>
+  <tr>
+    <td>6</td>
+    <td>The maximum number of tokens has been exceeded</td> 
+  </tr>
+</table>
